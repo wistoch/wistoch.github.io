@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="cache-control" content="no-store">
+<meta http-equiv="Pragma" contect="no-cache">
 <title> 嗡玛尼贝美哄 </title>
 <head>
     <style type="text/css">
@@ -27,7 +28,13 @@
             var lines = origin.split("\n");
            // document.getElementById("reset").rows = lines.length-2;
             // 第一行是说明
-            output+=lines[0]+"\n";
+            var line0 = lines[0];
+            var pos = line0.indexOf("念诵观音心咒报数");
+            var d = new Date();
+            line0 = d.getFullYear()+"年"+ (d.getMonth()+1)+"月"+ d.getDate()+"日" + line0.substring(pos);
+
+            output+=line0+"\n";
+
             for (var i=1; i<lines.length; i++) {
                 var line = lines[i];
                 var curline = "";
