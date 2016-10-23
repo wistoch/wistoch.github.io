@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<title> 嗡玛尼贝美哄 </title>
+<head>
+    <style type="text/css">
+        .content {
+            width:100%;
+            overflow:auto;
+            word-break:break-all;
+            color:black;
+       }
+        .button {
+            text-align:center;
+            font-size: medium;
+            font-weight: bold;
+            color:blue;
+            float: left;
+        }
+    </style>
+    <script type="text/javascript">
+
+        function format(content){
+            var origin = content;
+            var output = "";
+            var lines = origin.split("\n");
+            document.getElementById("reset").rows = lines.length-2;
+            // 第一行是说明
+            output+=lines[0]+"\n";
+            for (var i=1; i<lines.length; i++) {
+                var line = lines[i];
+                var curline = "";
+                // 每一行的格式为
+                // 18.姓名 xxxx/yyyyyy
+                // xxxx可能为空
+                var splash = line.indexOf('/');
+                var dot = line.indexOf('.');
+                //  0..dot  序号
+                //  dot..splash  姓名+当日计数
+                //  splash..  总数
+                // 如果没有找到斜杠,说明之前没有计数,跳过直接拷贝
+                if (splash == -1 || dot == -1) {
+                    curline=lines[i];
+                } else {
+                    var tc = line.substring(dot + 1, splash);
+                    // 先删除字符串中的数字,然后删除空格
+                    var trimtc = tc.replace(/\d+/g, '').replace(/^\s+|\s+$/g,'');
+                    curline = line.substr(0, dot+1);
+                    trimtc += new Array(28 - trimtc.length*4 - curline.length*2).join(" ");
+                    curline += trimtc;
+                    curline += line.substring(splash);
+                }
+                output+=curline;
+                if (i != lines.length-1)
+                    output+="\n";
+
+            }
+            return output;
+
+        }
+
+        function reset()
+        {
+            var content = document.getElementById("reset").value;
+            document.getElementById("reset").value = format(content);
+            document.getElementById("reset").style.color = "red";
+
+        }
+
+        function clearcontent() {
+            document.getElementById("reset").innerText="";
+            document.getElementById("reset").value="";
+            document.getElementById("reset").innerHTML="";
+            //
+            document.getElementById("reset").style.color = "black";
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+<div>
+    <button class="button" style="width:70%" onclick="reset()">点击清零当日计数</button>
+</div>
+<div>
+    <button class="button" style="width:30%" onclick="clearcontent()">清除内容</button>
+</div>
+
+
+<div>
+    <textarea class="content" id="reset" rows="50"></textarea>
+</div>
+</body>
+</html>
