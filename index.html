@@ -54,7 +54,7 @@
                     // 先删除字符串中的数字,然后删除空格
                     var trimtc = tc.replace(/\d+/g, '').replace(/^\s+|\s+$/g,'');
                     curline = line.substr(0, dot+1);
-                    trimtc += new Array(28 - trimtc.length*4 - curline.length*2).join(" ");
+                    trimtc += new Array(22 - trimtc.length*4 - curline.length*2).join(" ");
                     curline += trimtc;
                     curline += line.substring(splash);
                 }
