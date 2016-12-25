@@ -74,8 +74,9 @@
             textobj.value = format(content);
             textobj.style.color = "red";
             textobj.style.backgroundColor = "yellow";
-            textobj.readOnly = "readonly";
-            textobj.select();
+         //   textobj.readOnly = "readonly";
+         //   textobj.select();
+            textobj.setSelectionRange(0, 9999);
         }
 
         function clearcontent() {
