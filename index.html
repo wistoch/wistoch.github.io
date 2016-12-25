@@ -47,8 +47,9 @@
                 var splash = line.indexOf('/');
                 var dot = line.indexOf('.');
                 if (dot == -1) {
-                    dot = line.indexOf('、');
+                    dot = line.indexOf("、");
                 }
+             //   console.log("dot: "+dot);
                 //  0..dot  序号
                 //  dot..splash  姓名+当日计数
                 //  splash..  总数
@@ -59,10 +60,17 @@
                     var tc = line.substring(dot + 1, splash);
                     // 先删除字符串中的数字,然后删除空格
                     var trimtc = tc.replace(/\d+/g, '').replace(/^\s+|\s+$/g,'');
+                 //   console.log("trimtc: " + trimtc);
                     curline = line.substr(0, dot+1);
-                    trimtc += new Array(22 - trimtc.length*4 - curline.length*2).join(" ");
+                //    console.log("curline: " + curline);
+                //    console.log(trimtc.length);
+                //    console.log(curline.length);
+                    var trimtclen = trimtc.length;
+                    if (trimtclen > 3) trimtclen = 3;
+                    trimtc += new Array(22 - trimtclen*4 - curline.length*2).join(" ");
                     curline += trimtc;
                     curline += line.substring(splash).replace(/^\s+|\s+$/g,'');
+                //    console.log("curline: " + curline);
                 }
                 output+=curline;
                 if (i != lines.length-1)
