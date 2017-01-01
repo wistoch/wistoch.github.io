@@ -33,6 +33,9 @@
             if (pos == -1) {
                 pos = line0.indexOf("大礼拜报数统计");
             }
+            if (pos == -1) {
+                pos = line0.indexOf("念金刚心咒报数");
+            }
             var d = new Date();
             line0 = d.getFullYear()+"年"+ (d.getMonth()+1)+"月"+ d.getDate()+"日" + line0.substring(pos);
 
