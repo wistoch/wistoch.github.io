@@ -71,7 +71,7 @@ function RoomEffectsSample(inputs) {
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
-        button.innerHTML = 'Push to Speak';
+        button.innerHTML = 'Click to record';
     }
     loader.load();
 }
@@ -137,4 +137,15 @@ RoomEffectsSample.prototype.releaseToSpeak = function() {
     this.convolver = convolver;
     // Start playback.
     this.source[this.source.start ? 'start' : 'noteOn'](0, 0, this.currentRecordingFrame*context.sampleRate);
+};
+
+RoomEffectsSample.prototype.BtnClicked = function() {
+    var button = document.querySelector('button');
+    if ( button.innerHTML.indexOf('record') > 0 ) {
+        this.pushToTalk();
+        button.innerHTML = 'Click to speak';
+    } else {
+        this.releaseToSpeak();
+        button.innerHTML = 'Click to record';
+    }
 };
