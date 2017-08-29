@@ -53,6 +53,8 @@ function RoomEffectsSample(inputs) {
 
     this.currentRecordingFrame = 0;
 
+    this.buttonStatus = 0; // 0: grayed  1: ready to record 2: click to record 3: click to speak
+
 
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
@@ -72,6 +74,7 @@ function RoomEffectsSample(inputs) {
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
         button.innerHTML = 'Click to record';
+        this.buttonStatus = 1;
     }
     loader.load();
 }
@@ -141,12 +144,13 @@ RoomEffectsSample.prototype.releaseToSpeak = function() {
 };
 
 RoomEffectsSample.prototype.BtnClicked = function() {
-    var button = document.querySelector('button');
-    if ( button.innerHTML.indexOf('record') > 0 ) {
+    if (this.buttonStatus == 1) {
         this.pushToTalk();
         button.innerHTML = 'Click to speak';
-    } else {
+        this.buttonStatus = 2;
+    } else if (this.buttonStatus == 2){
         this.releaseToSpeak();
         button.innerHTML = 'Click to record';
+        this.buttonStatus = 1;
     }
 };
