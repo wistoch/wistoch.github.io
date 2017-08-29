@@ -57,8 +57,12 @@ RoomEffectsSample.prototype.setImpulseResponse = function(index) {
 RoomEffectsSample.prototype.playPause = function() {
     if (!this.isPlaying) {
         // Make a source node for the sample.
-        var source = context.createBufferSource();
-        source.buffer = this.buffer;
+//        var source = context.createBufferSource();
+//        source.buffer = this.buffer;
+        var source = null;
+        navigator.getUserMedia({audio:true}, function(e) {
+            source = context.createMediaStreamSource(e);
+        }
         // Make a convolver node for the impulse response.
         var convolver = context.createConvolver();
         convolver.buffer = this.impulseResponseBuffer;
