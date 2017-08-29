@@ -77,6 +77,7 @@ function RoomEffectsSample(inputs) {
         button.removeAttribute('disabled');
         button.innerHTML = 'Click to record';
         this.buttonStatus = 1;
+        console.log(this.buttonStatus);
     }
     loader.load();
 }
@@ -150,6 +151,8 @@ RoomEffectsSample.prototype.releaseToSpeak = function() {
 };
 
 RoomEffectsSample.prototype.BtnClicked = function() {
+    console.log("buttonStatus : " + this.buttonStatus);
+
     if (this.buttonStatus == 1) {
         this.pushToTalk();
         button.innerHTML = 'Click to speak';
