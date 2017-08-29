@@ -55,6 +55,7 @@ function RoomEffectsSample(inputs) {
 
     this.buttonStatus = 0; // 0: grayed  1: ready to record 2: click to record 3: click to speak
 
+    this.convolver = context.createConvolver();
 
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
@@ -85,6 +86,7 @@ RoomEffectsSample.prototype.setImpulseResponse = function(index) {
     console.log(this.impulseResponses);
     console.log(this.impulseResponses[index]);
     this.impulseResponseBuffer = this.impulseResponses[index];
+    console.log(this.impulseResponseBuffer);
     // Change the impulse response buffer.
     this.convolver.buffer = this.impulseResponseBuffer;
 };
@@ -135,14 +137,14 @@ RoomEffectsSample.prototype.releaseToSpeak = function() {
     source.buffer = this.buffer;
 
     // Make a convolver node for the impulse response.
-    var convolver = context.createConvolver();
+
     convolver.buffer = this.impulseResponseBuffer;
     // Connect the graph.
-    source.connect(convolver);
+    source.connect(this.convolver);
     convolver.connect(context.destination);
     // Save references to important nodes.
     this.source = source;
-    this.convolver = convolver;
+
     // Start playback.
     this.source[this.source.start ? 'start' : 'noteOn'](0, 0, this.currentRecordingFrame*context.sampleRate);
 };
