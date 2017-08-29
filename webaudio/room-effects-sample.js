@@ -119,7 +119,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
         }
     }
 
-    this.mssource.connect(node);
+    this.mssource.connect(this.node);
 
     this.node.connect(context.destination);
 
