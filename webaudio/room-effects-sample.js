@@ -54,6 +54,7 @@ function RoomEffectsSample(inputs) {
     this.currentRecordingFrame = 0;
 
     this.buttonStatus = 0; // 0: grayed  1: ready to record 2: click to record 3: click to speak
+    console.log("set buttonStatus to 0");
 
     this.convolver = context.createConvolver();
 
@@ -77,7 +78,7 @@ function RoomEffectsSample(inputs) {
         button.removeAttribute('disabled');
         button.innerHTML = 'Click to record';
         this.buttonStatus = 1;
-        console.log(this.buttonStatus);
+        console.log("set buttonStatus to " + this.buttonStatus);
     }
     loader.load();
 }
