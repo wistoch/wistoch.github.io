@@ -94,7 +94,14 @@ RoomEffectsSample.prototype.setImpulseResponse = function(index) {
 };
 
 
-RoomEffectsSample.prototype.pushToTalk = function() {
+RoomEffectsSample.prototype.pushToTalk = function(event) {
+    console.log("push To Talk");
+
+    event.preventDefault();
+
+    var button = document.querySelector('button');
+    button.innerHTML = 'Release to Speak';
+
     // Stop playback
     this.source[this.source.stop ? 'stop': 'noteOff'](0);
 
@@ -127,7 +134,14 @@ RoomEffectsSample.prototype.pushToTalk = function() {
 };
 
 
-RoomEffectsSample.prototype.releaseToSpeak = function() {
+RoomEffectsSample.prototype.releaseToSpeak = function(event) {
+    console.log("release to Speak");
+
+    event.preventDefault();
+
+    var button = document.querySelector('button');
+    button.innerHTML = 'Push to Talk';
+
     this.mssource.disconnect();
     this.node.disconnect();
     this.mssource.stop();
