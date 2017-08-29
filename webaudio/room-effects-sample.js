@@ -139,7 +139,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
     this.mssource.disconnect();
     this.node.disconnect();
-    this.mssource.stop();
+//    this.mssource.stop();
     this.node.onaudioprocess = null;
 
 
