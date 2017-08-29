@@ -69,6 +69,7 @@ function RoomEffectsSample(inputs) {
         ctx.buffer = context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
         ctx.impulseResponses = buffers.splice(0);
+        console.log(ctx.impulseResponses);
         ctx.impulseResponseBuffer = ctx.impulseResponses[0];
 
         var button = document.querySelector('button');
