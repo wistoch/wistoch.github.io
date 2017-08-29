@@ -17,6 +17,12 @@
 
 function RoomEffectsSample(inputs) {
     var ctx = this;
+
+
+    var btn = document.getElementById("pushBtn");
+    btn.addEventListener("touchstart", pushToTalk,false);
+    btn.addEventListener("touchend", releaseToPlay, false);
+
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('change', function(e) {
             var value = e.target.value;
@@ -25,6 +31,8 @@ function RoomEffectsSample(inputs) {
     }
 
     this.impulseResponses = [];
+
+    this.recorder = null;
     this.buffer = null;
 
     // Load all of the needed impulse responses and the actual sample.
@@ -38,12 +46,17 @@ function RoomEffectsSample(inputs) {
 
     function onLoaded(buffers) {
         ctx.buffer = buffers[0];
+        var channelTotal = 2;
+        var seconds = 2.0;
+        var frameCount = context.sampleRate * seconds;
+//        ctx.buffer = context.createBuffer(channelTotal, frameCount, context.sampleRate);
+
         ctx.impulseResponses = buffers.splice(1);
         ctx.impulseResponseBuffer = ctx.impulseResponses[0];
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
-        button.innerHTML = 'Play/pause';
+        button.innerHTML = 'Push to Speak';
     }
     loader.load();
 }
@@ -54,15 +67,37 @@ RoomEffectsSample.prototype.setImpulseResponse = function(index) {
     this.convolver.buffer = this.impulseResponseBuffer;
 };
 
-RoomEffectsSample.prototype.playPause = function() {
-    if (!this.isPlaying) {
+
+RoomEffectsSample.prototype.pushToTalk = function() {
+    // Stop playback
+    this.source[this.source.stop ? 'stop': 'noteOff'](0);
+
+    // if recording is supported then load Recorder.js
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({audio: true}, function (stream) {
+            var input = context.createMediaStreamSource(stream);
+            this.recorder = new Recorder(input);
+        }, function (e) {
+            window.alert('Please enable your microphone to begin recording');
+        });
+    } else {
+        window.alert('Your browser does not support recording, try Google Chrome');
+    }
+
+    this.recorder.clear();
+    this.recorder.startTime = context.currentTime;
+    this.recorder.record();
+
+};
+
+
+RoomEffectsSample.prototype.releaseToSpeak = function() {
+    this.recorder.stop();
+
+    this.recorder.getBuffer(function(buffers) {
         // Make a source node for the sample.
-//        var source = context.createBufferSource();
-//        source.buffer = this.buffer;
-        var source = null;
-        navigator.getUserMedia({audio:true}, function(e) {
-            source = context.createMediaStreamSource(e);
-        }
+        var source = context.createBufferSource();
+        source.buffer = buffers;
         // Make a convolver node for the impulse response.
         var convolver = context.createConvolver();
         convolver.buffer = this.impulseResponseBuffer;
@@ -73,9 +108,6 @@ RoomEffectsSample.prototype.playPause = function() {
         this.source = source;
         this.convolver = convolver;
         // Start playback.
-        this.source[this.source.start ? 'start': 'noteOn'](0);
-    } else {
-        this.source[this.source.stop ? 'stop': 'noteOff'](0);
+        this.source[this.source.start ? 'start' : 'noteOn'](0);
     }
-    this.isPlaying = !this.isPlaying;
 };
