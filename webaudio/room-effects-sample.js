@@ -20,8 +20,8 @@ function RoomEffectsSample(inputs) {
 
 
     var btn = document.getElementById("pushBtn");
-    btn.addEventListener("touchstart", pushToTalk,false);
-    btn.addEventListener("touchend", releaseToPlay, false);
+    btn.addEventListener("touchstart", this.pushToTalk,false);
+    btn.addEventListener("touchend", this.releaseToPlay, false);
 
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('change', function(e) {
@@ -32,12 +32,30 @@ function RoomEffectsSample(inputs) {
 
     this.impulseResponses = [];
 
-    this.recorder = null;
+    this.recorder = new (window.AudioContext || window.webkitAudioContext)();
+    this.mssource = null;
+    this.node = context.createScriptProcessor(1024, 2, 2);
+
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({audio: true}, function (stream) {
+            this.mssource = context.createMediaStreamSource(stream);
+        }, function (e) {
+            window.alert('Please enable your microphone to begin recording');
+        });
+    } else {
+        window.alert('Your browser does not support recording');
+    }
+
     this.buffer = null;
+    this.channelTotal = 2;
+    this.secondsMax = 2.0;
+    this.frameMax = context.sampleRate * this.secondsMax;
+
+    this.currentRecordingFrame = 0;
+
 
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
-        "sounds/speech.mp3",
         "sounds/impulse-response/telephone.wav",
         "sounds/impulse-response/muffler.wav",
         "sounds/impulse-response/spring.wav",
@@ -45,13 +63,10 @@ function RoomEffectsSample(inputs) {
     ], onLoaded);
 
     function onLoaded(buffers) {
-        ctx.buffer = buffers[0];
-        var channelTotal = 2;
-        var seconds = 2.0;
-        var frameCount = context.sampleRate * seconds;
-//        ctx.buffer = context.createBuffer(channelTotal, frameCount, context.sampleRate);
+//        ctx.buffer = buffers[0];
+        ctx.buffer = context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
-        ctx.impulseResponses = buffers.splice(1);
+        ctx.impulseResponses = buffers.splice(0);
         ctx.impulseResponseBuffer = ctx.impulseResponses[0];
 
         var button = document.querySelector('button');
@@ -72,42 +87,54 @@ RoomEffectsSample.prototype.pushToTalk = function() {
     // Stop playback
     this.source[this.source.stop ? 'stop': 'noteOff'](0);
 
-    // if recording is supported then load Recorder.js
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({audio: true}, function (stream) {
-            var input = context.createMediaStreamSource(stream);
-            this.recorder = new Recorder(input);
-        }, function (e) {
-            window.alert('Please enable your microphone to begin recording');
-        });
-    } else {
-        window.alert('Your browser does not support recording, try Google Chrome');
+    this.currentRecordingFrame = 0;
+
+
+    this.node.onaudioprocess = function(audioProcessingEvent) {
+        var inputBuffer = audioProcessingEvent.inputBuffer;
+        var outputBuffer = audioProcessingEvent.outputBuffer;
+
+        for (var channel = 0; channel < this.channelTotal; channel++) {
+            var inputData = inputBuffer.getChannelData(channel);
+            var bufferData = this.buffer.get
+            for (var sample = 0; sample < inputBuffer.length; sample++) {
+                if (this.currentRecordingFrame < this.frameMax) {
+                    this.buffer[this.currentRecordingFrame++] = inputData[sample];
+                }
+            }
+        }
     }
 
-    this.recorder.clear();
-    this.recorder.startTime = context.currentTime;
-    this.recorder.record();
+    this.mssource.connect(node);
+
+    this.node.connect(context.destination);
+
+    this.mssource.start();
+
 
 };
 
 
 RoomEffectsSample.prototype.releaseToSpeak = function() {
-    this.recorder.stop();
+    this.mssource.disconnect();
+    this.node.disconnect();
+    this.mssource.stop();
+    this.node.onaudioprocess = null;
 
-    this.recorder.getBuffer(function(buffers) {
-        // Make a source node for the sample.
-        var source = context.createBufferSource();
-        source.buffer = buffers;
-        // Make a convolver node for the impulse response.
-        var convolver = context.createConvolver();
-        convolver.buffer = this.impulseResponseBuffer;
-        // Connect the graph.
-        source.connect(convolver);
-        convolver.connect(context.destination);
-        // Save references to important nodes.
-        this.source = source;
-        this.convolver = convolver;
-        // Start playback.
-        this.source[this.source.start ? 'start' : 'noteOn'](0);
-    });
+
+    // Make a source node for the sample.
+    var source = context.createBufferSource();
+    source.buffer = this.buffer;
+
+    // Make a convolver node for the impulse response.
+    var convolver = context.createConvolver();
+    convolver.buffer = this.impulseResponseBuffer;
+    // Connect the graph.
+    source.connect(convolver);
+    convolver.connect(context.destination);
+    // Save references to important nodes.
+    this.source = source;
+    this.convolver = convolver;
+    // Start playback.
+    this.source[this.source.start ? 'start' : 'noteOn'](0, 0, this.currentRecordingFrame*context.sampleRate);
 };
