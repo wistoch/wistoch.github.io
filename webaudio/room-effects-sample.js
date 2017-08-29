@@ -61,6 +61,7 @@ function RoomEffectsSample(inputs) {
     this.source = context.createBufferSource();
 
     console.log(this.source);
+    console.log(this.source.stop);
 
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
