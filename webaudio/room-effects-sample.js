@@ -58,6 +58,8 @@ function RoomEffectsSample(inputs) {
 
     this.convolver = context.createConvolver();
 
+    this.source = context.createBufferSource();
+
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
         "sounds/impulse-response/telephone.wav",
@@ -149,17 +151,16 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
 
     // Make a source node for the sample.
-    var source = context.createBufferSource();
-    source.buffer = this.buffer;
+
+    this.source.buffer = this.buffer;
 
     // Make a convolver node for the impulse response.
 
-    convolver.buffer = this.impulseResponseBuffer;
+    this.convolver.buffer = this.impulseResponseBuffer;
     // Connect the graph.
-    source.connect(this.convolver);
-    convolver.connect(context.destination);
+    this.source.connect(this.convolver);
+    this.convolver.connect(context.destination);
     // Save references to important nodes.
-    this.source = source;
 
     // Start playback.
     this.source[this.source.start ? 'start' : 'noteOn'](0, 0, this.currentRecordingFrame*context.sampleRate);
