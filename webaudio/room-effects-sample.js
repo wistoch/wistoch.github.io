@@ -100,7 +100,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     button.innerHTML = 'Release to Speak';
 
     // Stop playback
-    this.source[this.source.stop ? 'stop': 'noteOff'](0);
+    this.source.stop(0);
 
     this.currentRecordingFrame = 0;
 
@@ -158,7 +158,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     // Save references to important nodes.
 
     // Start playback.
-    this.source[this.source.start ? 'start' : 'noteOn'](0, 0, this.currentRecordingFrame*context.sampleRate);
+    this.source.start(0, 0, this.currentRecordingFrame*context.sampleRate);
 };
 
 RoomEffectsSample.prototype.BtnClicked = function() {
