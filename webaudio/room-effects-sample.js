@@ -19,9 +19,7 @@ function RoomEffectsSample(inputs) {
     var ctx = this;
 
 
-    var btn = document.getElementById("pushBtn");
-    btn.addEventListener("touchstart", this.pushToTalk,false);
-    btn.addEventListener("touchend", this.releaseToPlay, false);
+
 
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('change', function(e) {
@@ -38,7 +36,7 @@ function RoomEffectsSample(inputs) {
 
     if (navigator.getUserMedia) {
         navigator.getUserMedia({audio: true}, function (stream) {
-            this.mssource = context.createMediaStreamSource(stream);
+            ctx.mssource = context.createMediaStreamSource(stream);
         }, function (e) {
             window.alert('Please enable your microphone to begin recording');
         });
