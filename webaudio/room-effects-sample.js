@@ -83,6 +83,7 @@ function RoomEffectsSample(inputs) {
 RoomEffectsSample.prototype.setImpulseResponse = function(index) {
     console.log(index);
     console.log(this.impulseResponses);
+    console.log(this.impulseResponses[index]);
     this.impulseResponseBuffer = this.impulseResponses[index];
     // Change the impulse response buffer.
     this.convolver.buffer = this.impulseResponseBuffer;
