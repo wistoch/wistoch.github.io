@@ -54,7 +54,6 @@ function RoomEffectsSample(inputs) {
     this.currentRecordingFrame = 0;
 
     this.buttonStatus = 0; // 0: grayed  1: ready to record 2: click to record 3: click to speak
-    console.log("set buttonStatus to 0");
 
     this.convolver = context.createConvolver();
 
@@ -76,24 +75,17 @@ function RoomEffectsSample(inputs) {
         ctx.buffer = context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
         ctx.impulseResponses = buffers.splice(0);
-        console.log(ctx.impulseResponses);
         ctx.impulseResponseBuffer = ctx.impulseResponses[0];
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
         button.innerHTML = 'Push to Talk';
-        this.buttonStatus = 1;
-        console.log("set buttonStatus to " + this.buttonStatus);
     }
     loader.load();
 }
 
 RoomEffectsSample.prototype.setImpulseResponse = function(index) {
-    console.log(index);
-    console.log(this.impulseResponses);
-    console.log(this.impulseResponses[index]);
     this.impulseResponseBuffer = this.impulseResponses[index];
-    console.log(this.impulseResponseBuffer);
     // Change the impulse response buffer.
     this.convolver.buffer = this.impulseResponseBuffer;
 };
