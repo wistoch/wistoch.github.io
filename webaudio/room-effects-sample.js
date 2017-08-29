@@ -96,10 +96,11 @@ RoomEffectsSample.prototype.pushToTalk = function() {
 
         for (var channel = 0; channel < this.channelTotal; channel++) {
             var inputData = inputBuffer.getChannelData(channel);
-            var bufferData = this.buffer.get
+            var bufferData = this.buffer.getChannelData(channel);
             for (var sample = 0; sample < inputBuffer.length; sample++) {
                 if (this.currentRecordingFrame < this.frameMax) {
-                    this.buffer[this.currentRecordingFrame++] = inputData[sample];
+                    bufferData[this.currentRecordingFrame++] = inputData[sample];
+                    console.log(this.currentRecordingFrame + "  :  " + inputData[sample]);
                 }
             }
         }
