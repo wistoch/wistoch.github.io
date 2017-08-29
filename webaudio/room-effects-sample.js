@@ -109,5 +109,5 @@ RoomEffectsSample.prototype.releaseToSpeak = function() {
         this.convolver = convolver;
         // Start playback.
         this.source[this.source.start ? 'start' : 'noteOn'](0);
-    }
+    });
 };

@@ -1,4 +1,4 @@
-import InlineWorker from 'inline-worker';
+//import InlineWorker from 'inline-worker';
 
 export class Recorder {
     config = {
