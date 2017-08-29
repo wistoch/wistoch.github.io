@@ -76,7 +76,7 @@ function RoomEffectsSample(inputs) {
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
-        button.innerHTML = 'Click to record';
+        button.innerHTML = 'Push to Talk';
         this.buttonStatus = 1;
         console.log("set buttonStatus to " + this.buttonStatus);
     }
