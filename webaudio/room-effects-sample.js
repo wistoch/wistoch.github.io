@@ -60,6 +60,8 @@ function RoomEffectsSample(inputs) {
 
     this.source = context.createBufferSource();
 
+    console.log(this.source);
+
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
         "sounds/impulse-response/telephone.wav",
