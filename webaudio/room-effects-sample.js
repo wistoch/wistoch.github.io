@@ -162,7 +162,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
 
     // Start playback.
-    this.source.start(0, 0, this.currentRecordingFrame*context.sampleRate);
+    this.source.start(0, 0, this.currentRecordingFrame/context.sampleRate);
 };
 
 RoomEffectsSample.prototype.audioEnded = function(event) {
