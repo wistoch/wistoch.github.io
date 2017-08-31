@@ -95,7 +95,8 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     button.innerHTML = 'Release to Speak';
 
     // Stop playback
-//    this.source.disconnect();
+    if (this.source)
+        this.source.disconnect();
 
     this.currentRecordingFrame = 0;
 
