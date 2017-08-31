@@ -70,7 +70,7 @@ function RoomEffectsSample(inputs) {
 //        ctx.buffer = buffers[0];
 
         ctx.impulseResponses = buffers.splice(0);
-        ctx.impulseResponseBuffer = ctx.impulseResponses[0];
+        ctx.impulseResponseBuffer = ctx.impulseResponses[3];
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
