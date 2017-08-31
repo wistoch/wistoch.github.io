@@ -102,6 +102,8 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
 
     this.node.onaudioprocess = function(audioProcessingEvent) {
+        console.log("onaudioprocess");
+        
         var inputBuffer = audioProcessingEvent.inputBuffer;
         var outputBuffer = audioProcessingEvent.outputBuffer;
 
@@ -153,6 +155,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     this.source.connect(this.convolver);
     this.convolver.connect(context.destination);
     // Save references to important nodes.
+
 
     // Start playback.
     this.source.start(0, 0, this.currentRecordingFrame*context.sampleRate);
