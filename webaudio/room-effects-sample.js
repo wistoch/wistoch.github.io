@@ -105,7 +105,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     this.node.onaudioprocess = function(audioProcessingEvent) {
         console.log("onaudioprocess");
-        
+
         var inputBuffer = audioProcessingEvent.inputBuffer;
         var outputBuffer = audioProcessingEvent.outputBuffer;
 
@@ -154,8 +154,10 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
     this.convolver.buffer = this.impulseResponseBuffer;
     // Connect the graph.
-    this.source.connect(this.convolver);
-    this.convolver.connect(context.destination);
+   // this.source.connect(this.convolver);
+   // this.convolver.connect(context.destination);
+
+    this.source.connect(context.destination);
     // Save references to important nodes.
 
 
