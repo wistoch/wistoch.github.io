@@ -129,8 +129,8 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     var gainNode = context.createGain();
     gainNode.gain.value = 0;
 
-    this.node.connect(gain);
-    gain.connect(context.destination);
+    this.node.connect(gainNode);
+    gainNode.connect(context.destination);
 
 
 
