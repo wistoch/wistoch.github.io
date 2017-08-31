@@ -104,7 +104,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
 
     this.node.onaudioprocess = function(audioProcessingEvent) {
-        console.log("onaudioprocess");
+//        console.log("onaudioprocess");
 
         var inputBuffer = audioProcessingEvent.inputBuffer;
         var outputBuffer = audioProcessingEvent.outputBuffer;
