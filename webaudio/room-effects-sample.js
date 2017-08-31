@@ -74,7 +74,7 @@ function RoomEffectsSample(inputs) {
 
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
-        button.innerHTML = 'Push to Talk';
+        button.innerHTML = '按住说话';
     }
     loader.load();
 }
@@ -94,7 +94,8 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     var ctx = this;
 
     var button = document.querySelector('button');
-    button.innerHTML = 'Release to Speak';
+    button.innerHTML = '松开回放声音';
+    button.color = 0x0000FF;
 
     // Stop playback
     if (this.source)
@@ -169,7 +170,7 @@ RoomEffectsSample.prototype.audioEnded = function(event) {
     console.log("audioEnded");
     var button = document.querySelector('button');
     button.removeAttribute('disabled');
-    button.innerHTML = 'Push to Talk'
+    button.innerHTML = '按住说话'
 }
 
 RoomEffectsSample.prototype.BtnClicked = function() {
