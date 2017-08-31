@@ -91,6 +91,8 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     event.preventDefault();
 
+    var ctx = this;
+
     var button = document.querySelector('button');
     button.innerHTML = 'Release to Speak';
 
@@ -103,9 +105,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     this.node.onaudioprocess = function(audioProcessingEvent) {
         console.log("onaudioprocess");
-
-        var ctx = this;
-
+        
         var inputBuffer = audioProcessingEvent.inputBuffer;
         var outputBuffer = audioProcessingEvent.outputBuffer;
 
