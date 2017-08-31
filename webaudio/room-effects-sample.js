@@ -144,10 +144,10 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     button.style.backgroundColor = "white";
 
 
-    this.mssource.disconnect();
     this.node.disconnect();
 //    this.mssource.stop();
     this.node.onaudioprocess = null;
+    this.mssource.disconnect();
 
 
     // Make a source node for the sample.
