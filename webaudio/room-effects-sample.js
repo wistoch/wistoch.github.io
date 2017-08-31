@@ -104,7 +104,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     try {
         this.source.stop();
     } catch (DOMException) {
-        
+
     }
     // Stop playback
     this.source.disconnect();
@@ -144,7 +144,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     event.preventDefault();
 
     var button = document.querySelector('button');
-    button.addAttribute('disabled');
+    button.disabled = true;
 
     this.mssource.disconnect();
     this.node.disconnect();
