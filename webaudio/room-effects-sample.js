@@ -59,6 +59,7 @@ function RoomEffectsSample(inputs) {
     this.buffer =  context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
     this.source.buffer = this.buffer;
+    this.source.onended = this.audioEnded;
 
 
     console.log(this.source);
@@ -139,7 +140,7 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     event.preventDefault();
 
     var button = document.querySelector('button');
-    button.innerHTML = 'Push to Talk';
+    button.addAttribute('disabled');
 
     this.mssource.disconnect();
     this.node.disconnect();
@@ -161,6 +162,12 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     // Start playback.
     this.source.start(0, 0, this.currentRecordingFrame*context.sampleRate);
 };
+
+RoomEffectsSample.prototype.audioEnded = function() {
+    var button = document.querySelector('button');
+    button.removeAttribute('disabled');
+    button.innerHTML = 'Push to Talk'
+}
 
 RoomEffectsSample.prototype.BtnClicked = function() {
     console.log("buttonStatus : " + this.buttonStatus);
