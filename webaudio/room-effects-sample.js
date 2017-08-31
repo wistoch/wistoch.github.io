@@ -57,13 +57,7 @@ function RoomEffectsSample(inputs) {
 
 
     this.buffer =  context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
-
-
-
-
-    console.log(this.source);
-    console.log(this.source.stop);
-
+    
     // Load all of the needed impulse responses and the actual sample.
     var loader = new BufferLoader(context, [
         "sounds/impulse-response/telephone.wav",
@@ -100,11 +94,6 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
     var button = document.querySelector('button');
     button.innerHTML = 'Release to Speak';
 
-    try {
-        this.source.stop();
-    } catch (DOMException) {
-
-    }
     // Stop playback
     this.source.disconnect();
 
