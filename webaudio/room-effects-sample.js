@@ -55,11 +55,10 @@ function RoomEffectsSample(inputs) {
 
     this.convolver = context.createConvolver();
 
-    this.source = context.createBufferSource();
+
     this.buffer =  context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
-    this.source.buffer = this.buffer;
-    this.source.onended = this.audioEnded;
+
 
 
     console.log(this.source);
@@ -153,7 +152,9 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
 
     // Make a source node for the sample.
-
+    this.source = context.createBufferSource();
+    this.source.buffer = this.buffer;
+    this.source.onended = this.audioEnded;
 
     // Make a convolver node for the impulse response.
 
