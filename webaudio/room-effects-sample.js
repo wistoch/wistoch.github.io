@@ -46,7 +46,7 @@ function RoomEffectsSample(inputs) {
 
 
     this.channelTotal = 2;
-    this.secondsMax = 2.0;
+    this.secondsMax = 120.0;
     this.frameMax = context.sampleRate * this.secondsMax;
 
     this.currentRecordingFrame = 0;
