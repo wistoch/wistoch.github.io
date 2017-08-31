@@ -115,7 +115,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
             for (var sample = 0; sample < inputBuffer.length; sample++) {
                 if (ctx.currentRecordingFrame < ctx.frameMax) {
                     bufferData[ctx.currentRecordingFrame++] = inputData[sample];
-                    console.log(ctx.currentRecordingFrame + "  :  " + inputData[sample]);
+//                    console.log(ctx.currentRecordingFrame + "  :  " + inputData[sample]);
                 }
             }
         }
