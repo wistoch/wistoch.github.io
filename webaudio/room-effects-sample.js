@@ -103,17 +103,17 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     this.node.onaudioprocess = function(audioProcessingEvent) {
         console.log("onaudioprocess");
-        
+
         var inputBuffer = audioProcessingEvent.inputBuffer;
         var outputBuffer = audioProcessingEvent.outputBuffer;
 
-        for (var channel = 0; channel < this.channelTotal; channel++) {
+        for (var channel = 0; channel < ctx.channelTotal; channel++) {
             var inputData = inputBuffer.getChannelData(channel);
-            var bufferData = this.buffer.getChannelData(channel);
+            var bufferData = ctx.buffer.getChannelData(channel);
             for (var sample = 0; sample < inputBuffer.length; sample++) {
-                if (this.currentRecordingFrame < this.frameMax) {
-                    bufferData[this.currentRecordingFrame++] = inputData[sample];
-                    console.log(this.currentRecordingFrame + "  :  " + inputData[sample]);
+                if (ctx.currentRecordingFrame < ctx.frameMax) {
+                    bufferData[ctx.currentRecordingFrame++] = inputData[sample];
+                    console.log(ctx.currentRecordingFrame + "  :  " + inputData[sample]);
                 }
             }
         }
