@@ -163,7 +163,8 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
     this.source.start(0, 0, this.currentRecordingFrame*context.sampleRate);
 };
 
-RoomEffectsSample.prototype.audioEnded = function() {
+RoomEffectsSample.prototype.audioEnded = function(event) {
+    console.log("audioEnded");
     var button = document.querySelector('button');
     button.removeAttribute('disabled');
     button.innerHTML = 'Push to Talk'
