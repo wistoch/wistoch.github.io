@@ -75,6 +75,8 @@ function RoomEffectsSample(inputs) {
         var button = document.querySelector('button');
         button.removeAttribute('disabled');
         button.innerHTML = '按住说话';
+        button.style.backgroundColor = "white";
+
     }
     loader.load();
 }
@@ -95,7 +97,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     var button = document.querySelector('button');
     button.innerHTML = '松开回放声音';
-    button.color = 0x0000FF;
+    button.style.backgroundColor = "blue";
 
     // Stop playback
     if (this.source)
@@ -171,6 +173,7 @@ RoomEffectsSample.prototype.audioEnded = function(event) {
     var button = document.querySelector('button');
     button.removeAttribute('disabled');
     button.innerHTML = '按住说话'
+    button.style.backgroundColor = "white";
 }
 
 RoomEffectsSample.prototype.BtnClicked = function() {
