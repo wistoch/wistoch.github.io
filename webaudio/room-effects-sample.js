@@ -44,7 +44,7 @@ function RoomEffectsSample(inputs) {
         window.alert('Your browser does not support recording');
     }
 
-    this.buffer = null;
+
     this.channelTotal = 2;
     this.secondsMax = 2.0;
     this.frameMax = context.sampleRate * this.secondsMax;
@@ -56,6 +56,8 @@ function RoomEffectsSample(inputs) {
     this.convolver = context.createConvolver();
 
     this.source = context.createBufferSource();
+    this.buffer =  context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
+
     this.source.buffer = this.buffer;
 
 
@@ -72,7 +74,6 @@ function RoomEffectsSample(inputs) {
 
     function onLoaded(buffers) {
 //        ctx.buffer = buffers[0];
-        ctx.buffer = context.createBuffer(ctx.channelTotal, ctx.frameMax, context.sampleRate);
 
         ctx.impulseResponses = buffers.splice(0);
         ctx.impulseResponseBuffer = ctx.impulseResponses[0];
