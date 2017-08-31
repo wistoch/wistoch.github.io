@@ -126,7 +126,7 @@ RoomEffectsSample.prototype.pushToTalk = function(event) {
 
     this.mssource.connect(this.node);
 
-//    this.node.connect(context.destination);
+    this.node.connect(context.destination);
 
 //    this.mssource.start();
 
