@@ -141,6 +141,8 @@ RoomEffectsSample.prototype.releaseToSpeak = function(event) {
 
     var button = document.querySelector('button');
     button.disabled = true;
+    button.style.backgroundColor = "white";
+
 
     this.mssource.disconnect();
     this.node.disconnect();
